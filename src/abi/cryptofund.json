@@ -1,0 +1,137 @@
+{
+  "compiler": {
+    "version": "0.8.25+commit.b61c2a91"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "fallback"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_surname",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_ownerMail",
+            "type": "string"
+          },
+          {
+            "internalType": "uint32",
+            "name": "_phoneNumber",
+            "type": "uint32"
+          },
+          {
+            "internalType": "string",
+            "name": "_projectName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_requestedDonation",
+            "type": "uint256"
+          }
+        ],
+        "name": "createProject",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "projects",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "receive"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {},
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {},
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "contracts/CryptoFund.sol": "CryptoFund"
+    },
+    "evmVersion": "cancun",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "remappings": []
+  },
+  "sources": {
+    "contracts/CryptoFund.sol": {
+      "keccak256": "0xe91dcee7b833dfb9de48faa12969f731a3e27fc576e58c38dd15b106fe021b94",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://da0d3a07b47a847f43933b7070a0e3c8b800767ca0446807b920f23d837b3913",
+        "dweb:/ipfs/Qmc9tLUTXGJzWRki2eYHkQEmhKreGUe3BaiXThncb4kxNC"
+      ]
+    },
+    "contracts/CryptoFundProject.sol": {
+      "keccak256": "0x6984d9b1b73fa515501c1a2e300db29a02f53ce7992d2aed14fee402aea452f0",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://cb41e6bb014159a4bf6f3fa7c865ab0707e4c99b3db66fd7b34f1ab870f02a95",
+        "dweb:/ipfs/QmSbTa5qvXQkBGDnCSiJoDsa6ULFZVoCNLrYGrsv5mv9uM"
+      ]
+    }
+  },
+  "version": 1
+}

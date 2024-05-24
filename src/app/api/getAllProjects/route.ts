@@ -1,38 +1,19 @@
 import { NextResponse } from "next/server";
+import mongoDbClient from "../../../../mongo.config";
+export async function GET(req:Request){
+    try{
+      await mongoDbClient.connect();
+      const db = mongoDbClient.db("cryptofund");
+      const projects = db.collection("projects");
+      const docs = await projects.find({}).sort({ _id: -1 }).toArray();
+      return NextResponse.json({
+        data: docs,
+      });
 
-export function GET(req:Request){
-    return NextResponse.json({
-        data: [
-            {
-                id: "00000022112",
-                projectName:"FundingForWhitetakersFamily",
-                requestFund: 100,
-                totalFund: 50,
-                status: "pending",
-              },
-              {
-                  id: "d9920a21x",
-                  projectName:"IamNiggerBuyMePC",
-                  requestFund: 100,
-                  totalFund: 50,
-                  status: "pending",
-                 
-                },
-                {
-                  id: "xx23311a",
-                  projectName:"Prostitutes Funding Project",
-                  requestFund: 100,
-                  totalFund: 50,
-                  status: "pending",
-                 
-                },
-                {
-                  id: "fff2441a",
-                  projectName:"MyDadDiedIfYouWontHelpMeIWillBeDrugDealer",
-                  requestFund: 100,
-                  totalFund: 50,
-                  status: "pending",
-                },
-        ]
-    })
+    }
+    catch(e){
+      return NextResponse.json({
+        data: [],
+      });
+    }
 }

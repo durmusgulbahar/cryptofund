@@ -7,33 +7,26 @@ import { ColumnDef } from "@tanstack/react-table"
 export type Payment = {
   id: string
   projectName:string
-  requestFund: number
+  requestedDonation: number
   totalFund:number
   status: "pending" | "processing" | "success" | "failed"
 }
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "id",
+        accessorKey: "_id",
         header: () => <div>Project ID</div>,
     },
     {
         accessorKey: "projectName",
         header: () => <div>Project Name</div>,
     },
+    
     {
-        accessorKey: "totalFund",
-        header: () => <div>Total Fund</div>,
-      
-      },
-    {
-        accessorKey: "requestFund",
-        header: () => <div>Requested Fund</div>,
+        accessorKey: "requestedDonation",
+        header: () => <div>Requested Donation</div>,
     },
-    {
-        accessorKey: "status",
-        header: () => <div>Status</div>,
-    },
+    
     
   ]
   

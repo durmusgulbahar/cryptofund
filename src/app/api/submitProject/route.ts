@@ -1,11 +1,20 @@
 import { NextResponse } from "next/server";
 import mongoDbClient from "../../../../mongo.config";
+import { Web3 } from 'web3';
+import {deploy} from "@/app/services/contractCreation";
 
 export async function POST(req:Request){
     const resp = await req.json();
-
-
-    resp["contractAddress"] = "12345"
+    console.log(resp);
+    console.log(typeof resp.name)
+    console.log(typeof resp.surname)
+    console.log(typeof resp.email)
+    console.log(typeof parseInt(resp.phone))
+    console.log(typeof resp.projectName)
+    console.log(typeof parseInt(resp.requestedDonation))
+    const contractAddress =  await deploy(resp.name, resp.surname, resp.email, parseInt(resp.phone), resp.projectName, parseInt(resp.requestedDonation));
+    console.log(contractAddress)
+    resp["contractAddress"] = contractAddress;
     try {
          await mongoDbClient.connect();
          const db = mongoDbClient.db("cryptofund");
@@ -21,3 +30,4 @@ export async function POST(req:Request){
       }
 
 }
+

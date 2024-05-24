@@ -1,29 +1,18 @@
 import { NextResponse } from "next/server";
+import mongoDbClient from "../../../../mongo.config";
+import { ObjectId } from "mongodb";
 
 export async function GET(req: Request) {
-  return NextResponse.json({
-    data: {
-      id: "00000022112",
-      projectName: "FundingForWhitetakersFamily",
-      requestFund: 100,
-      totalFund: 50,
-      status: "pending",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus auctor, erat sit amet dapibus interdum, nisl justo aliquam quam, non volutpat orci sem vitae justo. Nam eget semper ligula. Ut vehicula magna sit amet efficitur pulvinar. Vivamus vestibulum leo a orci facilisis, nec interdum ex scelerisque. ",
-      transactions: [
-        {
-          txId: "bhhsj102831",
-          amount: 10,
-          from: "0x1234567890",
-          timestamp: 44829182,
-        },
-        {
-          txId: "bhhsj102831",
-          amount: 10,
-          from: "0x1234567890",
-          timestamp: 44829182,
-        },
-      ],
-    },
-  });
+  const {searchParams} = new URL(req.url);
+  const id = searchParams.get("id") as string;
+  const objectId = new ObjectId(id);
+  try {
+    await mongoDbClient.connect();
+    const db = mongoDbClient.db("cryptofund");
+    const project = await db.collection("projects").findOne({ _id: objectId });
+    console.log(project)
+    return NextResponse.json({ data: project });
+  } catch (error) {
+    return NextResponse.json({ message: "error", data: error });
+  }
 }

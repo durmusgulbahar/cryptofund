@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
             >
                 {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                        <Link href={`/project/${(row.original as { id: string }).id}`}>
+                        <Link href={`/project?id=${(row.original as { _id: string })._id}`}>
                             {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext()

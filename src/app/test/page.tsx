@@ -1,15 +1,22 @@
-import React from 'react'
-import {ProjectForm} from '@/components/form'
+"use client";
+import React from "react";
+import Fund from "../services/fund";
+import { Button } from "@/components/ui/button";
+import { deploy } from "../services/contractCreation";
 
-type Props = {}
+type Props = {};
 
-export default function page({}: Props) {
+export default  function page({}: Props) {
+ 
   return (
-    <div className='flex justify-center '>
-        <div className='border border-solid border-black p-10 mt-5'>
-        <ProjectForm/>
-        </div>
-       
+    <div>
+      <Button
+        onClick={() => {
+          deploy("name", "surname", "ownerMail", 123, "projectName", 1000);
+        }}
+      >
+        Deploy
+      </Button>
     </div>
-  )
+  );
 }
