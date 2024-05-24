@@ -6,7 +6,9 @@ import whites from "C:UsersdurmusDesktopcrowdfund_projectpublichq720.jpg";
 import { DataTable } from "@/app/transactions/data-table";
 import Web3 from "web3"; // Import Web3 library
 import { columns } from "@/app/transactions/columns";
-
+import Fund from "@/app/services/fund";
+import { getBalance } from "@/app/services/getContractBalance";
+import { set } from "zod";
 const ganacheUrl = "http://127.0.0.1:7545";
 const httpProvider = new Web3.providers.HttpProvider(ganacheUrl);
 const web3 = new Web3(httpProvider);
@@ -87,7 +89,7 @@ const ABI = [
     type: "function",
   },
 ];
-const contractAddress = "0x8de242a879c8196d1938a9a1d2a6db5e49687b78";
+const contractAddress = "0x8AA2e2fc239dfc625BdA95012CeA01BdfF503C66";
 
 async function getProject(id: string) {
   const data = await fetch(`http://localhost:3000/api/getProject?id=${id}`, {
@@ -105,9 +107,7 @@ export default function page(props: Props) {
   const [data, setData] = useState(null);
   const [connectedAccount, setConnectedAccount] = useState("null");
   const [donation, setDonation] = useState("0");
-  const [contractAddress, setContractAddress] = useState(
-    "0x8de242a879c8196d1938a9a1d2a6db5e49687b78"
-  );
+  const [contractAddress, setContractAddress] = useState("0");
   async function connectMetamask() {
     //check metamask is installed
     if ((window as any).ethereum) {
@@ -127,53 +127,12 @@ export default function page(props: Props) {
     }
   }
 
-  async function getTotalDonation() {}
+  
 
-  async function donateFunc() {
+  async function handleFund() {
     await connectMetamask();
-    const accounts = await web3.eth.getAccounts();
-    const defaultAccount: string = accounts[0];
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    contract.handleRevert = true;
-    console.log(contract);
     try {
-      const receipt: any = await contract.methods.donate().send({
-        from: defaultAccount,
-        gas: "1000000",
-        gasPrice: "10000000000",
-        value: web3.utils.toWei("1", "ether"),
-      });
-      console.log("Transaction Hash: " + receipt.transactionHash);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function getContractAddress() {
-    await connectMetamask();
-    const accounts = await web3.eth.getAccounts();
-    const defaultAccount: string = accounts[0];
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    contract.handleRevert = true;
-    console.log(contract);
-    try {
-      const address: string = await contract.methods.getProjectAddress().call();
-      console.log("address: " + address);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function getContractBalance() {
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    contract.handleRevert = true;
-    console.log(contract);
-    try {
-      const balance: string = await contract.methods
-        .getContractBalance()
-        .call();
-      console.log("balance: " + balance);
-      return balance;
+      await Fund(data.data.contractAddress, 0.001);
     } catch (error) {
       console.error(error);
     }
@@ -183,22 +142,20 @@ export default function page(props: Props) {
     const fetchData = async () => {
       try {
         const data = await getProject(props.searchParams.id);
-        console.log(data);
+        console.log("USE EFFECT", data);
+        console.log(
+          "********************************",
+          data.data.contractAddress
+        );
         setData(data);
+        const d = await getBalance(data.data.contractAddress);
+        console.log("*************DONATION************", d);
+        setDonation(d)
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-    const donation = async () => {
-      const balance: string = (await getContractBalance()) || "0"; // Provide a default value of an empty string
-      console.log("USE EFFECT", balance);
-      console.log(typeof balance);
-      const b = web3.utils.fromWei(balance, "ether");
-      setDonation(b.toString());
-    };
-
-    donation();
   }, [props.searchParams.id]);
 
   if (!data) {
@@ -215,12 +172,14 @@ export default function page(props: Props) {
         <div className="flex flex-col gap-5 border border-solid border-black p-10 w-2/4">
           <p>Project ID: {data.data._id}</p>
           <p>Requested Fund: {data.data.requestedDonation}$</p>
-          <p>Total Fund: {parseInt(donation) * 3700} $</p>
-          <p className="text-sm">Contract Address: {contractAddress}</p>
+          <p>Total Fund: {parseInt(donation) * 3700 / 1000000000000000000} $</p>
+          <p className="text-sm">
+            Contract Address: {data.data.contractAddress}
+          </p>
           <div className="p-3 flex flex-col gap-2">
             <p>DONATE</p>
             <Input type="text" placeholder="Enter amount $" />
-            <Button onClick={() => getContractBalance()}>Donate</Button>
+            <Button onClick={() => handleFund()}>Donate</Button>
           </div>
         </div>
       </div>
