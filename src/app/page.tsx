@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Payment, columns } from "./projects/columns";
 import { DataTable } from "./projects/data-table";
 
