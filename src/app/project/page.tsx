@@ -1,14 +1,12 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import whites from "C:UsersdurmusDesktopcrowdfund_projectpublichq720.jpg";
-import { DataTable } from "@/app/transactions/data-table";
 import Web3 from "web3"; // Import Web3 library
-import { columns } from "@/app/transactions/columns";
 import Fund from "@/app/services/fund";
 import { getBalance } from "@/app/services/getContractBalance";
-import { set } from "zod";
+
 const ganacheUrl = "http://127.0.0.1:7545";
 const httpProvider = new Web3.providers.HttpProvider(ganacheUrl);
 const web3 = new Web3(httpProvider);
@@ -127,7 +125,7 @@ export default function page(props: Props) {
     }
   }
 
-  
+
 
   async function handleFund() {
     await connectMetamask();

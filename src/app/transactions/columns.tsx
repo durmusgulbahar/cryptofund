@@ -6,30 +6,30 @@ import { ColumnDef } from "@tanstack/react-table"
 // You can use a Zod schema here if you want.
 export type Payment = {
   txId: string
-  from:string
+  from: string
   amount: number
-  timestamp:number
+  timestamp: number
 }
 
 export const columns: ColumnDef<Payment>[] = [
-    {
-        accessorKey: "txId",
-        header: () => <div>Tx ID</div>,
-    },
-    {
-        accessorKey: "from",
-        header: () => <div>From</div>,
-    },
-    {
-        accessorKey: "amount",
-        header: () => <div>Amount</div>,
-      
-      },
-    {
-        accessorKey: "timestamp",
-        header: () => <div>Date</div>,
-    },
-   
-    
-  ]
-  
+  {
+    accessorKey: "txId",
+    header: () => <div>Tx ID</div>,
+  },
+  {
+    accessorKey: "from",
+    header: () => <div>From</div>,
+  },
+  {
+    accessorKey: "amount",
+    header: () => <div>Amount</div>,
+
+  },
+  {
+    accessorKey: "timestamp",
+    header: () => <div>Date</div>,
+  },
+
+
+]
+
