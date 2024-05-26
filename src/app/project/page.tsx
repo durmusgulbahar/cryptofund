@@ -214,7 +214,7 @@ export default function page(props: Props) {
           <p>Project ID: {data.data._id}</p>
           <p>Requested Fund: {data.data.requestedDonation}$</p>
           <p>
-            Total Fund: {(parseInt(donation) * 3700) / 1000000000000000000} $
+            Total Fund: {((parseInt(donation) * 3700) / 1000000000000000000).toFixed(2)} $
           </p>
           <p className="text-sm break-words">
             Contract Address: {data.data.contractAddress}
