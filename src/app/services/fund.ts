@@ -19,6 +19,7 @@ export default async function Fund(contractAddress: string, amount: number) {
   const signedMessage = await web3.eth.sign(message, defaultAccount);
   console.log(signedMessage);
 
+  
   const receipt: any = await myContract.methods.fund().send({
     from: defaultAccount,
     gas: 1000000,

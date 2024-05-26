@@ -24,7 +24,7 @@ export const columns: ColumnDef<Payment>[] = [
     
     {
         accessorKey: "requestedDonation",
-        header: () => <div>Requested Donation</div>,
+        header: () => <div>Requested Donation ($)</div>,
     },
     
     
