@@ -6,13 +6,46 @@ import { Input } from "@/components/ui/input";
 import Web3 from "web3"; // Import Web3 library
 import Fund from "@/app/services/fund";
 import { getBalance } from "@/app/services/getContractBalance";
-
+import { set } from "zod";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 const ganacheUrl = "http://127.0.0.1:7545";
 const httpProvider = new Web3.providers.HttpProvider(ganacheUrl);
 const web3 = new Web3(httpProvider);
 type Props = {
   params: {};
   searchParams: { id: string };
+};
+
+const AlertDialogX = () => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>Open</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
 };
 
 const ABI = [
@@ -106,6 +139,8 @@ export default function page(props: Props) {
   const [connectedAccount, setConnectedAccount] = useState("null");
   const [donation, setDonation] = useState("0");
   const [contractAddress, setContractAddress] = useState("0");
+  const [amount, setAmount] = useState(0);
+  const { toast } = useToast();
   async function connectMetamask() {
     //check metamask is installed
     if ((window as any).ethereum) {
@@ -126,11 +161,18 @@ export default function page(props: Props) {
   }
 
 
+  const handleAmountChange = (e: any) => {
+    setAmount(e.target.value);
+  };
 
   async function handleFund() {
     await connectMetamask();
     try {
-      await Fund(data.data.contractAddress, 0.001);
+      await Fund(data.data.contractAddress, amount / 3700);
+      toast({
+        title: "Donated success!",
+        description: `You donated ${amount}$ to the project!`,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -148,7 +190,7 @@ export default function page(props: Props) {
         setData(data);
         const d = await getBalance(data.data.contractAddress);
         console.log("*************DONATION************", d);
-        setDonation(d)
+        setDonation(d);
       } catch (error) {
         console.log(error);
       }
@@ -170,14 +212,41 @@ export default function page(props: Props) {
         <div className="flex flex-col gap-5 border border-solid border-black p-10 w-2/4">
           <p>Project ID: {data.data._id}</p>
           <p>Requested Fund: {data.data.requestedDonation}$</p>
-          <p>Total Fund: {parseInt(donation) * 3700 / 1000000000000000000} $</p>
-          <p className="text-sm">
+          <p>
+            Total Fund: {((parseInt(donation) * 3700) / 1000000000000000000).toFixed(2)} $
+          </p>
+          <p className="text-sm break-words">
             Contract Address: {data.data.contractAddress}
           </p>
           <div className="p-3 flex flex-col gap-2">
             <p>DONATE</p>
-            <Input type="text" placeholder="Enter amount $" />
-            <Button onClick={() => handleFund()}>Donate</Button>
+            <Input
+              type="text"
+              placeholder="Enter amount $"
+              value={amount}
+              onChange={handleAmountChange}
+            />
+            <AlertDialog>
+              <AlertDialogTrigger>
+                {" "}
+                <Button >Donate</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Would you like to continue?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You are going to donate {amount} $ to the project {data.data.projectName}.
+                    Are you sure?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>
+                    <Button onClick={() => handleFund()}>Donate</Button>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
