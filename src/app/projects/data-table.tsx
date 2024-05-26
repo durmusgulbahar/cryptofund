@@ -16,7 +16,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import Router from "next/router";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,9 +44,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 );
               })}
@@ -57,21 +56,21 @@ export function DataTable<TData, TValue>({
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-            <TableRow
+              <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-            >
+              >
                 {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                        <Link href={`/project?id=${(row.original as { _id: string })._id}`}>
-                            {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                            )}
-                        </Link>
-                    </TableCell>
+                  <TableCell key={cell.id}>
+                    <Link href={`/project?id=${(row.original as { _id: string })._id}`}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Link>
+                  </TableCell>
                 ))}
-            </TableRow>
+              </TableRow>
             ))
           ) : (
             <TableRow>

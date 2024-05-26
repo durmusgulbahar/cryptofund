@@ -1,11 +1,9 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import whites from "C:UsersdurmusDesktopcrowdfund_projectpublichq720.jpg";
-import { DataTable } from "@/app/transactions/data-table";
 import Web3 from "web3"; // Import Web3 library
-import { columns } from "@/app/transactions/columns";
 import Fund from "@/app/services/fund";
 import { getBalance } from "@/app/services/getContractBalance";
 import { set } from "zod";
@@ -161,6 +159,7 @@ export default function page(props: Props) {
       alert("Please download metamask");
     }
   }
+
 
   const handleAmountChange = (e: any) => {
     setAmount(e.target.value);

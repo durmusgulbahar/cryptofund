@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -40,7 +39,7 @@ const formSchema = z.object({
 });
 
 export function ProjectForm() {
-    const { toast } = useToast()
+  const { toast } = useToast()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,7 +51,7 @@ export function ProjectForm() {
       phone: "",
       projectName: "",
       requestedDonation: "0",
-      description:""
+      description: ""
     },
   });
 
@@ -63,7 +62,7 @@ export function ProjectForm() {
       body: JSON.stringify(values),
     });
     console.log(await resp.json());
-    
+
   }
 
   return (
@@ -164,11 +163,11 @@ export function ProjectForm() {
           )}
         />
         <Button type="submit" onClick={() => {
-        toast({
-          title: "Project submitted!",
-          description: "Project submitted, it will be listed after verification.",
-        })
-      }}>Submit</Button>
+          toast({
+            title: "Project submitted!",
+            description: "Project submitted, it will be listed after verification.",
+          })
+        }}>Submit</Button>
       </form>
     </Form>
   );

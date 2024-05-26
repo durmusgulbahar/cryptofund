@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
-import Fund from "../services/fund";
 import { Button } from "@/components/ui/button";
 import { deploy } from "../services/contractCreation";
 
 type Props = {};
 
-export default  function page({}: Props) {
- 
+export default function page({ }: Props) {
+
   return (
     <div>
       <Button

@@ -3,7 +3,7 @@ import mongoDbClient from "../../../../mongo.config";
 import { ObjectId } from "mongodb";
 
 export async function GET(req: Request) {
-  const {searchParams} = new URL(req.url);
+  const { searchParams } = new URL(req.url);
   const id = searchParams.get("id") as string;
   const objectId = new ObjectId(id);
   try {

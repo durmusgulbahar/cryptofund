@@ -16,5 +16,3 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "error", data: error });
   }
 }
-
-function handle() {}

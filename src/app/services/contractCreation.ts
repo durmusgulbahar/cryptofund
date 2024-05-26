@@ -1,8 +1,10 @@
 import { Web3 } from "web3";
 import { ABI } from "@/abi/abi";
-import {BYTECODE} from "@/abi/bytecode"
+import { BYTECODE } from "@/abi/bytecode"
+
 console.log("DEPLOYYY")
-export async function deploy(name:string,surname:string, ownerMail:string, phoneNumber:number, projectName:string, requestedDonation:number): Promise<void> {
+
+export async function deploy(name: string, surname: string, ownerMail: string, phoneNumber: number, projectName: string, requestedDonation: number): Promise<void> {
   const web3: Web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:7545")
   );

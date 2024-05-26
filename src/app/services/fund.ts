@@ -1,7 +1,5 @@
-import React from "react";
 import { Web3, Contract } from "web3";
-import { useState } from "react";
-import {ABI} from "@/abi/abi";
+import { ABI } from "@/abi/abi";
 type Props = {};
 
 
@@ -11,7 +9,7 @@ export default async function Fund(contractAddress: string, amount: number) {
   const web3: Web3 = new Web3(
     new Web3.providers.HttpProvider("http://localhost:7545")
   );
-  const myContract: any = new web3.eth.Contract(ABI,contractAddress);
+  const myContract: any = new web3.eth.Contract(ABI, contractAddress);
   const providersAccounts: string[] = await web3.eth.getAccounts();
   const defaultAccount: string = providersAccounts[0];
   console.log("deployer account:", defaultAccount);
@@ -28,5 +26,4 @@ export default async function Fund(contractAddress: string, amount: number) {
     value: web3.utils.toWei(amount, 'ether')
   });
   console.log('Transaction Hash: ' + receipt.transactionHash);
-  
 }
